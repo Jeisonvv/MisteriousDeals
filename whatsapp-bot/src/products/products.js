@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 let messages = [];
-const dia = "Miercoles"
+const dia = "Viernes"
 const ip = process.env.IP
 // Función asincrónica para realizar la solicitud
 const solicitud = async () => {
@@ -26,4 +26,7 @@ const init = async () => {
 init();
 
 // Exporta la función para obtener los mensajes
-module.exports = { getMessages: () => messages };
+module.exports = { getMessages: async () =>{
+    await init()
+    return messages
+} };

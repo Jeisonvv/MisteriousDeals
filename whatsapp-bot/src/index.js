@@ -65,11 +65,12 @@ client.on('ready', async () => {
         }
     };
 
-    // Enviar el primer mensaje inmediatamente
-    sendMessage();
+     // Enviar el primer mensaje un minuto después de que el cliente esté listo
+     sendMessage()
+    //  setTimeout(sendMessage, 1800000);
 
     // Configurar el intervalo para enviar un mensaje cada 6 minutos (180000 ms)
-    let intervalId = setInterval(sendMessage, 360000); // Inicialmente cada 6 minutos
+    let intervalId = setInterval(sendMessage, 240000); // Inicialmente cada  minutos
 });
 
 // Inicializar el cliente de WhatsApp
