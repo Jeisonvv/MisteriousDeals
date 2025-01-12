@@ -1,1 +1,4 @@
+
 .wwebjs-auth/
+.wwebjs_cache/
+sessions/
