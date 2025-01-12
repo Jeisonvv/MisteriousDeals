@@ -8,7 +8,7 @@ const ip = process.env.IP
 
 const array = async () =>{
     const mensaje = await getMessages()
-    
+    console.log('hola')
     for (const message of mensaje) {
         try {
 
