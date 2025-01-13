@@ -1,6 +1,10 @@
-const client = require("../clinet");
+const client = require("../clinet"); // el cliente de whatsapp
+const readyEvent = require('../event/ready') //evento del cliente 
 const datasaletoday = require('../modules/dataventa/dataDia/dataDia'); // Obtener las compras
 const sendWithInterval = require('../modules/dataventa/dataDia/intervarsed'); // Módulo para enviar con intervalo
+
+
+readyEvent(client) // aqui verificamos que el cliente este listo para trabar
 
 const groupventa = '120363265917528751@g.us'; // ID del grupo de venta
 const grupoTrabajo = '120363322174878103@g.us'; // ID del grupo de trabajo

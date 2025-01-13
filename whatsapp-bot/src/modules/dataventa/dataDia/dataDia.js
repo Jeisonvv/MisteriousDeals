@@ -92,7 +92,7 @@ const processMessage = async (msg, timezone) => {
         const parts = quotedMessageContent;
         const regex = /^(.*?)(?:,|\s*\$|\s*$|:|–|_|#|\-)/; // Expresión regular
         const match = parts.match(regex);  // Usar .match() para obtener el resultado
-
+        
         // Verificar si la expresión regular encontró una coincidencia
         if (match && match[1]) {
             const title = match[1].trim();
