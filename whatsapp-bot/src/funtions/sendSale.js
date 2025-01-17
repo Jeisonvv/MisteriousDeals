@@ -1,14 +1,24 @@
 const client = require('../clinet');
-const listenForReactions = require('../modules/dataventa/confirmationOfSale');
+
+// Registrar la hora de inicio
+let startTime;
 
 client.on('ready', () => {
     console.log('Cliente listo para escuchar reacciones.');
+    startTime = Date.now(); // Guardar la hora de inicio en milisegundos
 });
 
 client.on('message_reaction', async (reaction) => {
     try {
         const groupId = '120363265917528751@g.us'; // ID del grupo de ventas
-        const groupBomo = '120363391658022985@g.us' // grupo de la agencia 
+        const groupBomo = '120363391658022985@g.us'; // Grupo de la agencia
+
+        // Filtrar reacciones antiguas usando la marca de tiempo
+        const reactionTimestamp = reaction.timestamp * 1000; // Convertir la marca de tiempo de segundos a milisegundos
+        if (reactionTimestamp < startTime) {
+            console.log('Reacción antigua ignorada.');
+            return;
+        }
 
         // Verifica si la reacción es del grupo correcto y si es la reacción ✅
         if (reaction.id.remote === groupId && reaction.reaction === '✅') {
@@ -46,8 +56,8 @@ client.on('message_reaction', async (reaction) => {
 
             // Enviar mensaje al participante que escribió el mensaje original
             const confirmationMessage = `✨ ¡Compra confirmada! ✨\n\n${title}\n\n📦 ¡Gracias por tu compra! 🙌\nℹ️ Para más información, contáctanos. 📱\n*BOMO SHOPING*\n👉 3124131990 👈`;
-            // Mesnaje para el grupo
-            const confirmationVenta = `🛒 *Venta de producto*\n\n${title}\n\n📱 *Clinte:* ${originalSenderPhoneNumber}\n🔑 *Confirmado por*: ${senderPhoneNumber}`;
+            // Mensaje para el grupo
+            const confirmationVenta = `🛒 *Venta de producto*\n\n${title}\n\n📱 *Cliente:* ${originalSenderPhoneNumber}\n🔑 *Confirmado por*: ${senderPhoneNumber}`;
 
             if (originalSenderPhoneNumber) {
                 await client.sendMessage(originalSenderPhoneNumber + '@c.us', confirmationMessage); // Enviar mensaje al participante que escribió el mensaje original
@@ -59,7 +69,6 @@ client.on('message_reaction', async (reaction) => {
                 await client.sendMessage(groupBomo, confirmationVenta); // Enviar mensaje al grupo
                 console.log(`Mensaje enviado al grupo ${groupId}: ${confirmationVenta}`);
             }
-
         }
     } catch (error) {
         console.error('Error al manejar la reacción:', error);
